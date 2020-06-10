@@ -93,8 +93,11 @@ td, th {
 	<option <?= $donnes["statut"] == '0' ? 'selected' : '' ?> value="0">En attente </option>
 	<option <?= $donnes["statut"] == '1' ? 'selected' : '' ?> value="1">En cours </option>
 	<option <?= $donnes["statut"] == '2' ? 'selected' : '' ?> value="2">Résolu </option>
-	</select></td>
-</form>
+	</select>
+	<button type="submit">Modifier</button>
+	<input type="hidden" value=$id_ticket name="id_ticket">
+	</form>
+</td>
   </tr>
 </table>
 

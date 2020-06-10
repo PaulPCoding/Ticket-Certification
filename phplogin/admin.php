@@ -6,7 +6,6 @@ if (!isset($_SESSION['loggedin'])) {
 	exit;
 }
 
-
 $mysqli=mysqli_connect('localhost','root','','phplogin');
 if(!$mysqli) {
 	echo "Erreur connexion BDD";

@@ -47,14 +47,14 @@ function htmlent($texte){
 		<div class="content">
 			<h2>Page d'accueil</h2>
 		</div>
-		<form action="<?php echo $UrlPage; ?>?action=envoie" method="post">
+		<form action="<?php echo htmlspecialchars($UrlPage); ?>?action=envoie" method="post">
 		<div>
 			<label for="title" style="margin-left: 167px; margin-top: 100px"> Sujet :</label><br>
-		<input type="text" name="sujet" class="text-line" style="margin-left: 167px; margin-bottom: 20px"value="<?php echo isset($_POST['sujet']) ? htmlent($_POST['sujet']) : ""; ?>" required/>
+		<input type="text" name="sujet" class="text-line" style="margin-left: 167px; margin-bottom: 20px"value="<?php echo htmlspecialchars(isset($_POST['sujet'])) ? htmlent($_POST['sujet']) : ""; ?>" required/>
 		</div>
 	<div>
 		<label for="title"style="margin-left: 167px;"> Message :</label><br>
-		<textarea placeholder="Votre message..." class="textbox" name="message" id="message" cols="145" rows="15" style="margin-left: 167px" required><?php echo isset($_POST['message']) ? htmlent($_POST['message']) : ""; ?></textarea>
+		<textarea placeholder="Votre message..." class="textbox" name="message" id="message" cols="145" rows="15" style="margin-left: 167px" required><?php echo htmlspecialchars(isset($_POST['message'])) ? htmlent($_POST['message']) : ""; ?></textarea>
 	</div> 
 	<div>
 		<input name="envoie" type="submit" value="Envoyer" style="margin-left: 1105px;">

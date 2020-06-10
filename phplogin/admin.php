@@ -1,9 +1,12 @@
 <?php
 session_start();
 if (!isset($_SESSION['loggedin'])) {
-  header('Location: index.html');
-  if ($_SESSION['user_type'] != 'admin'){ ('Location:home.php');}
+	header('Location: index.html');
 	exit;
+}
+if($_SESSION['user_type'] !== 'admin'){
+  header('Location: home.php');
+  exit();
 }
 
 $mysqli=mysqli_connect('localhost','root','','phplogin');
@@ -11,31 +14,6 @@ if(!$mysqli) {
 	echo "Erreur connexion BDD";
 	exit;
 }
-$DATABASE_HOST = 'localhost';
-$DATABASE_USER = 'root';
-$DATABASE_PASS = '';
-$DATABASE_NAME = 'phplogin';
-$con = mysqli_connect($DATABASE_HOST, $DATABASE_USER, $DATABASE_PASS, $DATABASE_NAME);
-
-
-
-
-/*$user_type = isset($_GET['user_type']);
-$result = mysqli_query($con,"SELECT user_type FROM accounts WHERE '".$_SESSION['login_user']."'");
-$result_value = mysqli_fetch_array($result);
-echo $result_value['user_type'];
-if($result_value['user_type']!="admin") {
-  header("Location: home.php");
-}*/
-/*if ($stmt = $con->prepare('SELECT user_type FROM accounts WHERE user_type = ?')) {
-$results = mysqli_query($db, $query);
-$logged_in_user = mysqli_fetch_assoc($results);
-if ($user_type == 'admin') {
-    header ('Location: admin.php');
-    }else {
-         header('Location: home.php');
-    }
-  }*/
 
 ?>
 
@@ -89,7 +67,7 @@ td, th {
     $ArrayStatut = array(
       0 => "<span style='color:blue;font-weight:bold'>En attente</span>",
       1 => "<span style='color:orange;font-weight:bold'>En cours</span>",
-      2 => "<span style='color:green;font-weight:bold'>Résolue</span>",
+      2 => "<span style='color:green;font-weight:bold'>Résolu</span>",
       );
 
   $reponse = $bdd->query("SELECT * FROM ticket ORDER BY id DESC");

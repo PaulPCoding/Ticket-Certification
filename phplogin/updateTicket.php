@@ -1,40 +1,39 @@
 <?php
 session_start();
 if (!isset($_SESSION['loggedin'])) {
-  header('Location: index.html');
-  if ($_SESSION['user_type'] != 'admin'){ ('Location:home.php');}
+	header('Location: index.html');
 	exit;
 }
 
-
-$DATABASE_HOST = 'localhost';
-$DATABASE_USER = 'root';
-$DATABASE_PASS = '';
-$DATABASE_NAME = 'phplogin';
-$con = mysqli_connect($DATABASE_HOST, $DATABASE_USER, $DATABASE_PASS, $DATABASE_NAME);
-
-?>
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <?php
-
-if(isset($_POST["id_ticket"]))
-{
-	$statut=htmlspecialchars($_POST["statut"]);
-	mysqli_query($con,"UPDATE ticket SET statut= '$statut' WHERE id = " .$id);
-	header('Location: admin.php');
-} else {
-	echo "<p>Une erreur s'est produite, merci de réessayer.</p>";
+if($_SESSION['user_type'] !== 'admin'){
+    header('Location: home.php');
+    exit;
 }
 
-?>
-</body>
-</html>
+$bdd = new PDO('mysql:host=localhost;dbname=phplogin;charset=utf8','root','');
+
+
+$bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+
+if(isset($_POST['id_ticket']) && isset($_POST['statut']) && !empty($_POST['id_ticket']) && !empty($_POST['statut'])){
+
+
+    $statut = htmlspecialchars($_POST['statut']);
+    $id = intval($_POST['id_ticket']);
+    
+
+    $sql = 'UPDATE ticket SET ticket.statut = :statut WHERE ticket.id = :id';
+    $requete = $bdd->prepare($sql);
+    $execute = $requete->execute([':statut' => $statut, ':id' => $id]);
+
+    if($execute){
+        echo "Ticket modifié";
+        header('Location:admin.php');
+    } else {
+        echo "Erreur";
+    }
+
+} else {
+    echo "Des informations sont manquantes";
+}

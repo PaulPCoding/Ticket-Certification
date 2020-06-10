@@ -1,7 +1,8 @@
 <?php
 session_start();
 if (!isset($_SESSION['loggedin'])) {
-	header('Location: index.html');
+  header('Location: index.html');
+  if ($_SESSION['user_type'] != 'admin'){ ('Location:home.php');}
 	exit;
 }
 
@@ -118,7 +119,7 @@ td, th {
     <td>A venir</td>
     <td><?php echo $ArrayStatut [$donnes['statut']];?></td>
     <td>
-    <a href="ticket.php?id=<?php echo $donnes['id'];  ?>" class="buttonize"><i class="fa fa-pen" style="color: grey; margin-left: 10px;"></i></a>
+    <a href="ticket.php?id=<?php echo htmlspecialchars($donnes['id']);  ?>" class="buttonize"><i class="fa fa-pen" style="color: grey; margin-left: 10px;"></i></a>
       </td>
   </tr>
 </table>

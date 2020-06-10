@@ -25,6 +25,7 @@ $ArrayStatut = array(
 
 $id = $_GET['id'];
 
+
 $bdd = new PDO('mysql:host=localhost;dbname=phplogin;charset=utf8','root','');
 $reponse = $bdd->query("SELECT * FROM ticket WHERE id = " .$id);
 
@@ -72,8 +73,8 @@ td, th {
 		<div class="content">
 			
 			<h2 style="margin-bottom:40px">Ticket numéro <?php echo $donnes['id'];?></h2>
+			
 	</div>
-	
     <table>
   <tr style= "background-color: yellow">
     <td>Date</td>
@@ -86,27 +87,14 @@ td, th {
     <td><?php echo $donnes['date'];?></td>
     <td><?php echo $donnes['sujet'];?></td>
     <td><?php echo $donnes['message'];?></td>
-    <td>A venir</td>
+	<td>A venir</td>
+	<form action="updateTicket.php" method="POST">
     <td><select name="statut">
-		<option value="0">En attente</option>
-		<?php 
-		if($donnes["statut"] == '0'){
-			echo "selected";
-		}
-		?>
-		<option value="1">En cours</option>
-		<?php 
-		if($donnes["statut"] == '1'){
-			echo "selected";
-		}
-		?>
-		<option value="2">Résolu</option>
-		<?php 
-		if($donnes["statut"] == '2'){
-			echo "selected";
-		}
-		?>
+	<option <?= $donnes["statut"] == '0' ? 'selected' : '' ?> value="0">En attente </option>
+	<option <?= $donnes["statut"] == '1' ? 'selected' : '' ?> value="1">En cours </option>
+	<option <?= $donnes["statut"] == '2' ? 'selected' : '' ?> value="2">Résolu </option>
 	</select></td>
+</form>
   </tr>
 </table>
 
@@ -115,14 +103,7 @@ td, th {
 	</div>
 	<?php
 
-if(isset($_POST["envoyer"]))
-{
-	$statut=$_POST["statut"];
-	mysqli_query($con,"UPDATE ticket SET statut= '$statut' WHERE id = " .$id);
-	header('Location: admin.php');
-} else {
-	echo "<p>Une erreur s'est produite, merci de réessayer.</p>";
-}
+/*ici*/
 ?>
 
 	<?php
